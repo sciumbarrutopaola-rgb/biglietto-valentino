@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💘</title>
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  color: white;
+}
+
+h1 { margin-top: 60px; font-size: 3em; text-shadow: 0 0 20px #ff6f91; }
+h2 { font-size: 1.8em; }
+
+button {
+  padding: 15px 40px;
+  font-size: 20px;
+  margin: 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#yes { background: #ff6f91; color: white; position: relative; }
+#yes:hover { transform: scale(1.2); }
+
+#no { background: #ff3c38; color: white; position: relative; }
+
+.message { font-size: 2em; margin-top: 40px; animation: pulse 1s infinite alternate; }
+
+@keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+.heart { position: absolute; font-size: 25px; animation: fall linear infinite; }
+
+@keyframes fall {
+  to { transform: translateY(100vh); }
+}
+
+img {
+  width: 400px;
+  margin-top: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #ff6f91;
+}
+</style>
+</head>
+<body>
+
+<div id="main">
+  <h1>Be My Valentine 💘</h1>
+  <h2>Vuoi essere il mio Valentine?</h2>
+  <button id="yes">SÌ ❤️</button>
+  <button id="no">NO 😅</button>
+</div>
+
+<script>
+// Messaggi pulsante NO
+let noMessages = ["Riprova…", "Hai sbagliato 😅", "Oh no hai sbagliato ancora", "Perché continui a cliccarmi?"];
+let index = 0;
+
+// Elementi
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const main = document.getElementById("main");
+
+// Funzione cuori che cadono
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+
+// Avvia pioggia di cuori
+setInterval(createHeart, 300);
+
+// Clic su SÌ
+yesBtn.addEventListener("click", () => {
+  main.innerHTML = `
+    <h1>Ti amooo 💘</h1>
+    <img src="https://i.imgur.com/hVn9qzO.jpg" alt="Lilly e il Vagabondo">
+    <div class="message">Sapevo avresti fatto la scelta giusta ✨</div>
+  `;
+});
+
+// Clic su NO → il pulsante SÌ scappa e cambia messaggio
+noBtn.addEventListener("mouseover", () => {
+  index = (index + 1) % noMessages.length;
+  noBtn.textContent = noMessages[index];
+
+  // Posizione casuale del pulsante SÌ
+  const x = Math.random() * (window.innerWidth - 150);
+  const y = Math.random() * (window.innerHeight - 100);
+
+  yesBtn.style.position = "absolute";
+  yesBtn.style.left = x + "px";
+  yesBtn.style.top = y + "px";
+});
+</script>
+</body>
+</html>
